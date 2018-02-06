@@ -1,0 +1,23 @@
+<template>
+  <!-- 插入组件，props静态传值 -->
+  <movies movieType="search"></movies>
+</template>
+
+<script>
+  import wepy from 'wepy';
+  // 引入组件
+  import Movies from '../components/movies'
+
+  export default class Search extends wepy.page {
+    config = {
+      navigationBarTitleText: '电影搜索',
+    };
+    // 声明组件
+    components = {
+      movies: Movies
+    };
+  }
+</script>
+
+<style>
+</style>

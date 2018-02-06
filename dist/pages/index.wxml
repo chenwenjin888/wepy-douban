@@ -1,0 +1,26 @@
+
+  <view class="page-head">
+    <form class="head-form" bindsubmit="formSubmit">
+      <input placeholder="输入电影名称" class="head-input" name="searchKey"/>
+      <button formType="submit" class="head-button">搜索</button>
+    </form>
+  </view>
+  <!-- 插入组件，props静态传值 -->
+  
+  <view>
+    <text class="padding-10">{{$movies$movieTitle}}</text>
+  </view>
+  <view class="movie-list">
+    <view class="movie-item"  wx:for="{{$movies$movieList}}" wx:for-item="movie" wx:key="{{movie.id}}">
+      <navigator url="/pages/detail?id={{movie.id}}">
+        <view class="item-inner">
+          <image mode="scaleToFill" src="{{movie.images.medium}}" class="movie-image"/>
+          <view>
+            <text class="movie-name">{{movie.title}}</text>
+          </view>
+          <image src="../../common/images/rating{{movie.rating.stars}}.png" class="bigstar"/>
+          {{movie.rating.average}}
+        </view>
+      </navigator>
+    </view>
+  </view>

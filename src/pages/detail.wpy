@@ -1,0 +1,65 @@
+<template>
+  <wxs module="filter" src="../common/filter.wxs"></wxs>
+
+  <view>
+    <image class="movie-image" mode="scaleToFill" src="{{movieInfo.images.large}}"/>
+  </view>
+  <view class="padding-10">
+    <view class="movie-title">{{movieInfo.title}}</view>
+    <view>导演：{{filter.joinName(movieInfo.directors)}}</view>
+    <view>主演：{{filter.joinName(movieInfo.casts)}}</view>
+    <view class="movie-summary">简介{{utils.formatTime()}}</view>
+    <view>{{movieInfo.summary}}</view>
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy';
+
+  export default class Search extends wepy.page {
+    config = {
+      navigationBarTitleText: '电影详情',
+    };
+
+    data = {
+      movieInfo: {}
+    };
+
+    onLoad(options) {
+      let _this = this;
+      wx.showLoading();
+      wx.request({
+        url: _this.$parent.globalData.apiUrl + '/movie/subject/' + options.id,
+        method: 'GET',
+        success(res) {
+          // 此处省略请求是否成功校验
+          _this.movieInfo = res.data;
+          _this.$apply();
+          wx.hideLoading();
+        }
+      })
+    }
+  }
+</script>
+
+<style>
+  .movie-image {
+    width: 100%;
+    height: 600rpx;
+  }
+
+  .movie-title {
+    margin-top: 30rpx;
+    font-size: 40rpx;
+    font-weight: bold;
+    color: #333;
+  }
+
+  .movie-summary {
+    border-top: 1rpx solid #eee;
+    margin-top: 20rpx;
+    padding-top: 20rpx;
+    color: #444;
+    font-size: 32rpx;
+  }
+</style>
